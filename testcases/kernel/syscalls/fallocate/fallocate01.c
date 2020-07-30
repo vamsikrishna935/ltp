@@ -84,6 +84,16 @@
  *		Cleanup the temporary folder
  *
 *************************************************************************/
+/*
+ * Patch Description: 
+ * Test Failure reason in SGX-LKL: 
+ * [[  SGX-LKL ]] libc_start_main_stage2(): Calling app main: /ltp/testcases/kernel/syscalls/fallocate/fallocate01
+ * fallocate01    1  TCONF  :  fallocate01.c:233: fallocate system call is not implemented
+ *
+ * Workaround to fix the issue:
+ * fallocate system call is failing on temporary file created under /tmp directory.
+ * So modified the tests to create directory in root filesystem.  
+ */
 
 #define _GNU_SOURCE
 
@@ -116,6 +126,7 @@ int fd_mode1, fd_mode2;
 int TST_TOTAL = 2;
 loff_t block_size;
 int buf_size;
+char *tempdir = "tempdir";
 
 /******************************************************************************
  * Performs all one time clean up for this test on successful
@@ -130,7 +141,9 @@ void cleanup(void)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode1);
 	if (close(fd_mode2) == -1)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode2);
-	tst_rmdir();
+	remove(fname_mode1);
+        remove(fname_mode2);
+        rmdir(tempdir);
 }
 
 /*****************************************************************************
@@ -143,14 +156,14 @@ void setup(void)
 	/* Create temporary directories */
 	TEST_PAUSE;
 
-	tst_tmpdir();
+	mkdir(tempdir, 0777);
 
-	sprintf(fname_mode1, "tfile_mode1_%d", getpid());
+	sprintf(fname_mode1, "%s/tfile_mode1_%d", tempdir, getpid());
 	fd_mode1 = SAFE_OPEN(cleanup, fname_mode1, O_RDWR | O_CREAT, 0700);
 	get_blocksize(fd_mode1);
 	populate_files(fd_mode1);
 
-	sprintf(fname_mode2, "tfile_mode2_%d", getpid());
+	sprintf(fname_mode2, "%s/tfile_mode2_%d", tempdir, getpid());
 	fd_mode2 = SAFE_OPEN(cleanup, fname_mode2, O_RDWR | O_CREAT, 0700);
 	populate_files(fd_mode2);
 }
