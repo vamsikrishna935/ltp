@@ -21,17 +21,15 @@
 
 /*
  * Patch Description:
- * Test failure reason in SGX-LKL:
- * [[  SGX-LKL ]] libc_start_main_stage2(): Calling app main: /ltp/testcases/kernel/syscalls/lgetxattr/lgetxattr02
- * tst_test.c:1106: INFO: Timeout per run is 0h 05m 00s
- * tst_test.c:1125: INFO: No fork support
- * lgetxattr02.c:78: CONF: no xattr support in fs or mounted without user_xattr option
- *
+    Test failure reason in SGX-LKL:
+    [[ SGX-LKL ]] libc_start_main_stage2(): Calling app main: /ltp/testcases/kernel/syscalls/lgetxattr/lgetxattr02
+    tst_test.c:1106: INFO: Timeout per run is 0h 05m 00s
+    tst_test.c:1125: INFO: No fork support
+    lgetxattr02.c:78: CONF: no xattr support in fs or mounted without user_xattr option
+
  * Workaround to fix the issue:
- * Modified the tests to use root filesystem.
- * Commented a test, which needs to be enabled once git issue 297 is fixed
- * Issue 297: [Tests] lkl_access_ok() should return -1 on invalid access
- * https://github.com/lsds/sgx-lkl/issues/297
+    Modified the tests to use root filesystem.
+    Disabled a test, which needs to be enabled once git issue lsds/sgx-lkl#297 is fixed
  */
 
 #include "config.h"
@@ -49,7 +47,7 @@
 
 #define SECURITY_KEY	"security.ltptest"
 #define VALUE	"this is a test value"
-#define tmpdir  "/tmplgetxattr"
+
 static struct test_case {
 	const char *path;
 	size_t size;
@@ -82,7 +80,7 @@ static void verify_lgetxattr(unsigned int n)
 static void setup(void)
 {
 	int res;
-	SAFE_MKDIR(tmpdir, 0644);
+
 	SAFE_TOUCH("testfile", 0644, NULL);
 	SAFE_SYMLINK("testfile", "symlink");
 
@@ -102,7 +100,6 @@ void cleanup(void)
 {
         remove("testfile");
         remove("symlink");
-        SAFE_RMDIR(tmpdir);
 }
 
 static struct tst_test test = {
