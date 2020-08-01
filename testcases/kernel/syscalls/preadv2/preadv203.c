@@ -253,7 +253,7 @@ static void check_preadv2_nowait(int fd)
 static void setup(void)
 {
 	rmdir(MNTPOINT);
-       SAFE_MKDIR(MNTPOINT, 0644);
+      SAFE_MKDIR(MNTPOINT, 0644);
 	char path[1024];
 	char buf[CHUNK_SZ];
 	unsigned int i;
