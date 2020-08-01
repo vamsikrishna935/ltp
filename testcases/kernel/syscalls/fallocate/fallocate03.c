@@ -159,8 +159,8 @@ void cleanup(void)
 	if (close(fd) == -1)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname);
 
-       remove(fname);
-       rmdir(tempdir);
+      remove(fname);
+      rmdir(tempdir);
 
 }
 
