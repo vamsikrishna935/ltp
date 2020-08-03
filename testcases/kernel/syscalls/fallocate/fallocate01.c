@@ -144,8 +144,8 @@ void cleanup(void)
 	if (close(fd_mode2) == -1)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode2);
 	remove(fname_mode1);
-       remove(fname_mode2);
-       rmdir(tempdir);
+      remove(fname_mode2);
+      rmdir(tempdir);
 }
 
 /*****************************************************************************
