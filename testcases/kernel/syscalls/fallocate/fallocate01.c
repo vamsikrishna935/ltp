@@ -84,6 +84,17 @@
  *		Cleanup the temporary folder
  *
 *************************************************************************/
+/*
+ * Patch Description:
+    Test Failure reason in SGX-LKL:
+    [[ SGX-LKL ]] libc_start_main_stage2(): Calling app main: /ltp/testcases/kernel/syscalls/fallocate/fallocate01
+    fallocate01 1 TCONF : fallocate01.c:233: fallocate system call is not implemented
+    Test is happening on temporary file created under /tmp, on which fallocate system call is failing.
+
+ * Workaround to fix the issue:
+    fallocate system call is failing on temporary file created under /tmp directory.
+    So modified the tests to create directory in root filesystem.
+ */
 
 #define _GNU_SOURCE
 
@@ -105,13 +116,15 @@
 #include "lapi/fcntl.h"
 
 #define BLOCKS_WRITTEN 12
+#define tempdir "tempdir"
+#define fname_mode1 tempdir "/tfile_mode1"	/* Files used for testing */
+#define fname_mode2 tempdir "/tfile_mode2"	/* Files used for testing */
 
 void get_blocksize(int);
 void populate_files(int fd);
 void runtest(int, int, loff_t);
 
 char *TCID = "fallocate01";
-char fname_mode1[255], fname_mode2[255];	/* Files used for testing */
 int fd_mode1, fd_mode2;
 int TST_TOTAL = 2;
 loff_t block_size;
@@ -130,7 +143,9 @@ void cleanup(void)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode1);
 	if (close(fd_mode2) == -1)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode2);
-	tst_rmdir();
+	remove(fname_mode1);
+       remove(fname_mode2);
+       rmdir(tempdir);
 }
 
 /*****************************************************************************
@@ -142,15 +157,14 @@ void setup(void)
 {
 	/* Create temporary directories */
 	TEST_PAUSE;
+	// fallocate system call is failing to create temporary directory under /tmp using tst_tmpdir function.
+	// so, creating test directory in root filesystem as workaroud
+	mkdir(tempdir, 0777);
 
-	tst_tmpdir();
-
-	sprintf(fname_mode1, "tfile_mode1_%d", getpid());
 	fd_mode1 = SAFE_OPEN(cleanup, fname_mode1, O_RDWR | O_CREAT, 0700);
 	get_blocksize(fd_mode1);
 	populate_files(fd_mode1);
 
-	sprintf(fname_mode2, "tfile_mode2_%d", getpid());
 	fd_mode2 = SAFE_OPEN(cleanup, fname_mode2, O_RDWR | O_CREAT, 0700);
 	populate_files(fd_mode2);
 }
