@@ -87,13 +87,13 @@
 /*
  * Patch Description:
     Test Failure reason in SGX-LKL:
-    [[ SGX-LKL ]] libc_start_main_stage2(): Calling app main: /ltp/testcases/kernel/syscalls/fallocate/fallocate01
-    fallocate01 1 TCONF : fallocate01.c:233: fallocate system call is not implemented
     Test is happening on temporary file created under /tmp, on which fallocate system call is failing.
+    Please refer git issue : https://github.com/lsds/sgx-lkl/issues/236
 
  * Workaround to fix the issue:
     fallocate system call is failing on temporary file created under /tmp directory.
     So modified the tests to create directory in root filesystem.
+    TODO: Enable tst_tmpdir once git issue 236 is fixed
  */
 
 #define _GNU_SOURCE
@@ -143,6 +143,8 @@ void cleanup(void)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode1);
 	if (close(fd_mode2) == -1)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode2);
+	// fallocate systemcall is failing on temporary directory created under /tmp
+	// Hence test is directory is created in root filesystem.
 	remove(fname_mode1);
       remove(fname_mode2);
       rmdir(tempdir);
@@ -157,7 +159,8 @@ void setup(void)
 {
 	/* Create temporary directories */
 	TEST_PAUSE;
-	// fallocate system call is failing to create temporary directory under /tmp using tst_tmpdir function.
+	// fallocate system call is failing on temporary directory under /tmp using tst_tmpdir function.
+	// Please refer git issue lsds/sgx-lkl#236
 	// so, creating test directory in root filesystem as workaroud
 	mkdir(tempdir, 0777);
 
