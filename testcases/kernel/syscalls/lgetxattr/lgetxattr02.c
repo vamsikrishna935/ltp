@@ -22,10 +22,7 @@
 /*
  * Patch Description:
     Test failure reason in SGX-LKL:
-    [[ SGX-LKL ]] libc_start_main_stage2(): Calling app main: /ltp/testcases/kernel/syscalls/lgetxattr/lgetxattr02
-    tst_test.c:1106: INFO: Timeout per run is 0h 05m 00s
-    tst_test.c:1125: INFO: No fork support
-    lgetxattr02.c:78: CONF: no xattr support in fs or mounted without user_xattr option
+    Tests were failing with no user_xattr support in tmp filesystem.
 
  * Workaround to fix the issue:
     Modified the tests to use root filesystem.
@@ -103,6 +100,7 @@ void cleanup(void)
 }
 
 static struct tst_test test = {
+	// Removed directory creation and mounting tmp filesystem
 	.needs_root = 1,
 	.test = verify_lgetxattr,
 	.tcnt = ARRAY_SIZE(tcase),
