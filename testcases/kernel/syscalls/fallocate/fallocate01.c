@@ -144,7 +144,7 @@ void cleanup(void)
 	if (close(fd_mode2) == -1)
 		tst_resm(TWARN | TERRNO, "close(%s) failed", fname_mode2);
 	// fallocate systemcall is failing on temporary directory created under /tmp
-	// Hence test is directory is created in root filesystem.
+	// Hence test directory is created in root filesystem.
 	remove(fname_mode1);
       remove(fname_mode2);
       rmdir(tempdir);
