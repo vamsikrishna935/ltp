@@ -37,7 +37,7 @@
  * Patch Description:
 	One sub test case create a child process and execlp the child.
 	In sgx-lkl currently fork is not supported. Hence, commenting this testcase.
-       TODO:Enable this sub test case after fixing Github issue lsds/sgx-lkl#598
+      TODO:Enable this sub test case after fixing Github issue lsds/sgx-lkl#598
  */
 #define _GNU_SOURCE
 
