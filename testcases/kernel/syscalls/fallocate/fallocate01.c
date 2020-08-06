@@ -88,12 +88,12 @@
  * Patch Description:
     Test Failure reason in SGX-LKL:
     Test is happening on temporary file created under /tmp, on which fallocate system call is failing.
-    Please refer git issue : https://github.com/lsds/sgx-lkl/issues/236
+    Please refer git issue : https://github.com/lsds/sgx-lkl/issues/734
 
  * Workaround to fix the issue:
     fallocate system call is failing on temporary file created under /tmp directory.
     So modified the tests to create directory in root filesystem.
-    TODO: Enable tst_tmpdir once git issue 236 is fixed
+   TODO: Enable tst_tmpdir once git issue 734 is fixed
  */
 
 #define _GNU_SOURCE
@@ -147,7 +147,7 @@ void cleanup(void)
 	// Hence test directory is created in root filesystem.
 	remove(fname_mode1);
       remove(fname_mode2);
-      rmdir(tempdir);
+      rmdir(tempdir); // TODO: Revert back to original once git issue lsds/sgx-lkl#734 is fixed
 }
 
 /*****************************************************************************
@@ -160,9 +160,8 @@ void setup(void)
 	/* Create temporary directories */
 	TEST_PAUSE;
 	// fallocate system call is failing on temporary directory under /tmp using tst_tmpdir function.
-	// Please refer git issue lsds/sgx-lkl#236
 	// so, creating test directory in root filesystem as workaroud
-	mkdir(tempdir, 0777);
+	mkdir(tempdir, 0777); // TODO: Revert back to original once git issue lsds/sgx-lkl#734 is fixed
 
 	fd_mode1 = SAFE_OPEN(cleanup, fname_mode1, O_RDWR | O_CREAT, 0700);
 	get_blocksize(fd_mode1);
