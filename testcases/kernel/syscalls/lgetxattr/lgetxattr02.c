@@ -100,7 +100,11 @@ void cleanup(void)
 }
 
 static struct tst_test test = {
-	// Removed directory creation and mounting tmp filesystem
+	// .needs_tmpdir = 1 creates a test directory mounting /tmp filesystem
+	// commented this line, so that temporary directory will be not created becuase
+	// the test is failing with no xattr support. Now the files will be directly 
+	// created in the root filesystem.
+	// .needs_tmpdir = 1,
 	.needs_root = 1,
 	.test = verify_lgetxattr,
 	.tcnt = ARRAY_SIZE(tcase),
