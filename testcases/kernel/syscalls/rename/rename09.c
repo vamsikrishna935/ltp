@@ -126,31 +126,31 @@ int main(int ac, char **av)
 		// Removed creation of child process using fork
 		// Created a thread instead of child process
 		int res;
-               pthread_t first_thread_tid;
-               res = pthread_create(&first_thread_tid, NULL, first_child_thread, NULL);
-               if (res == 0)
-               {
-                       tst_resm(TINFO, "first child thread created fine ...\n");
-                       pthread_join(first_thread_tid, NULL);
-               }
-               else
-               {
-                       tst_resm(TFAIL, "first child thread create failed");
-               }
+              pthread_t first_thread_tid;
+              res = pthread_create(&first_thread_tid, NULL, first_child_thread, NULL);
+              if (res == 0)
+              {
+                      tst_resm(TINFO, "first child thread created fine ...\n");
+                      pthread_join(first_thread_tid, NULL);
+              }
+              else
+              {
+                      tst_resm(TFAIL, "first child thread create failed");
+              }
 		
 		// Removed creation of second child process using fork
-               // Created a thread instead of child process
+              // Created a thread instead of child process
 		pthread_t second_thread_tid;
-               res = pthread_create(&second_thread_tid, NULL, second_child_thread, NULL);
-               if (res == 0)
-               {
-                       tst_resm(TINFO, "second child thread created fine ...\n");
-                       pthread_join(second_thread_tid, NULL);
-               }
-               else
-               {
-                       tst_resm(TFAIL, "second child thread create failed");
-               }
+              res = pthread_create(&second_thread_tid, NULL, second_child_thread, NULL);
+              if (res == 0)
+              {
+                      tst_resm(TINFO, "second child thread created fine ...\n");
+                      pthread_join(second_thread_tid, NULL);
+              }
+              else
+              {
+                      tst_resm(TFAIL, "second child thread create failed");
+              }
 	}
 
 	/*
