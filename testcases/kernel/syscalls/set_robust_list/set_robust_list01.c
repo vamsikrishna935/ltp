@@ -128,7 +128,7 @@ int main(int argc, char **argv)
 
 		if (TEST_RETURN == 0) {
 			tst_resm(TPASS,
-				 "set_robust_list: retval = %ld (expected %d), "
+				 "set_robust_list test: retval = %ld (expected %d), "
 				 "errno = %d (expected %d)", TEST_RETURN, 0,
 				 TEST_ERRNO, 0);
 		} else {
@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 
 	cleanup();
 
-	exit(EXIT_SUCCESS);
+//	exit(EXIT_SUCCESS);
 }
 
 void setup(void)
