@@ -253,7 +253,7 @@ static void check_preadv2_nowait(int fd)
 static void setup(void)
 {
 	rmdir(MNTPOINT);
-      SAFE_MKDIR(MNTPOINT, 0644);
+       mkdir(MNTPOINT, 0644);
 	char path[1024];
 	char buf[CHUNK_SZ];
 	unsigned int i;
@@ -285,7 +285,7 @@ static void do_cleanup(void)
 		remove(path);
 	}
 
-	SAFE_RMDIR(MNTPOINT);
+	rmdir(MNTPOINT);
 }
 
 TST_DECLARE_ONCE_FN(cleanup, do_cleanup);
