@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 
 	cleanup();
 
-//	exit(EXIT_SUCCESS);
+	exit(0);
 }
 
 void setup(void)
