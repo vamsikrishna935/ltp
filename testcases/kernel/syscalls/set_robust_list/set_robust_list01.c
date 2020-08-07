@@ -137,6 +137,8 @@ int main(int argc, char **argv)
 				 "errno = %d (expected %d)", TEST_RETURN, 0,
 				 TEST_ERRNO, 0);
 		}
+		
+		exit(0);
 
 	}
 
