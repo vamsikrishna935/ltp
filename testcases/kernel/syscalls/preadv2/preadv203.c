@@ -62,7 +62,7 @@
 #define CHUNK_SZ 4123
 #define CHUNKS 60
 #define MNTPOINT "mntpoint"
-#define FILES 500
+#define FILES 50
 
 static int fds[FILES];
 
