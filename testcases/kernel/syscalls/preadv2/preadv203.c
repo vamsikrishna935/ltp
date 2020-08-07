@@ -59,10 +59,10 @@
 #include "tst_safe_pthread.h"
 #include "lapi/preadv2.h"
 
-#define CHUNK_SZ 4123
-#define CHUNKS 60
+#define CHUNK_SZ 412
+#define CHUNKS 6
 #define MNTPOINT "mntpoint"
-#define FILES 50
+#define FILES 5
 
 static int fds[FILES];
 
