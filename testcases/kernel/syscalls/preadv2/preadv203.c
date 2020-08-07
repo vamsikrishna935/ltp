@@ -282,7 +282,7 @@ static void do_cleanup(void)
 		snprintf(path, sizeof(path), MNTPOINT"/file_%i", i);
 		if (fds[i] > 0)
 			SAFE_CLOSE(fds[i]);
-		remove(path);
+			remove(path);
 	}
 
 	SAFE_RMDIR(MNTPOINT);
