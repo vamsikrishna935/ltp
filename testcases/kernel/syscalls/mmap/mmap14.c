@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		tst_count = 0;
 		
 		static int fd;
-		fd = open(TEMPFILE, O_RDONLY | O_CREAT);
+		fd = open("/proc/self/status", O_RDONLY);
 
 		getvmlck(&sz_before);
 
