@@ -57,12 +57,15 @@ int main(int argc, char *argv[])
 	for (lc = 0; TEST_LOOPING(lc); lc++) {
 
 		tst_count = 0;
+		
+		static int fd;
+		fd = open(TEMPFILE, O_PATH);
 
 		getvmlck(&sz_before);
 
 		addr = mmap(NULL, MMAPSIZE, PROT_READ | PROT_WRITE,
 			    MAP_PRIVATE | MAP_LOCKED | MAP_ANONYMOUS,
-			    -1, 1024);
+			    fd, 0);
 
 		if (addr == MAP_FAILED) {
 			tst_resm(TFAIL | TERRNO, "mmap of %s failed", TEMPFILE);
