@@ -200,14 +200,14 @@ static void test_cloexec(void)
 
 	sprintf(buf, "%ld", TEST_RETURN);
 
-	pid = tst_fork();
-	if (pid < 0)
-		tst_brkm(TBROK | TERRNO, cleanup, "fork() failed");
+//	pid = tst_fork();
+//	if (pid < 0)
+//		tst_brkm(TBROK | TERRNO, cleanup, "fork() failed");
 
-	if (pid == 0) {
-		if (execlp("open12_child", "open12_child", buf, NULL))
-			exit(2);
-	}
+//	if (pid == 0) {
+//		if (execlp("open12_child", "open12_child", buf, NULL))
+//			exit(2);
+//	}
 
 	SAFE_CLOSE(cleanup, TEST_RETURN);
 
