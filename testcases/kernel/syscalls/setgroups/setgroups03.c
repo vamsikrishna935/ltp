@@ -97,8 +97,9 @@ struct test_case_t {		/* test case struct. to hold ref. test cond's */
 	int exp_errno;
 	int (*setupfunc) ();
 } Test_cases[] = {
-	{
-	1, 1, "Size is > sysconf(_SC_NGROUPS_MAX)", EINVAL, NULL}, {
+//	{
+//	1, 1, "Size is > sysconf(_SC_NGROUPS_MAX)", EINVAL, NULL},
+	 {
 	0, 2, "Permission denied, not super-user", EPERM, setup1}
 };
 
