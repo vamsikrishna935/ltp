@@ -131,7 +131,7 @@ static void test_writev(void)
 static void setup(void)
 {
 	bad_addr = SAFE_MMAP(0, 1, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS,
-			0, 0);
+			-1, 0);
 }
 
 static struct tst_test test = {
