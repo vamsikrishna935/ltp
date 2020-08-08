@@ -27,7 +27,8 @@
  */
 #include <stdio.h>
 #include <sys/mman.h>
-
+#include "safe_macros.h"
+#include "lapi/fcntl.h"
 #include "test.h"
 
 #define TEMPFILE        "mmapfile"
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
 		tst_count = 0;
 		
 		static int fd;
-		fd = open(TEMPFILE, O_RDWR | O_PATH);
+		fd = SAFE_OPEN(TEMPFILE, O_RDWR | O_PATH);
 
 		getvmlck(&sz_before);
 
