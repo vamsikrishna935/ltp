@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		tst_count = 0;
 		
 		static int fd;
-		fd = SAFE_OPEN(TEMPFILE, O_RDWR | O_CREAT, 0644);
+		fd = SAFE_OPEN(TEMPFILE, O_PATH);
 
 		getvmlck(&sz_before);
 
