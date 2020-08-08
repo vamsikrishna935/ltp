@@ -108,7 +108,7 @@ static void setup(void)
 
 	page_sz = getpagesize();
 
-	tst_tmpdir();
+//	tst_tmpdir();
 
 	fildes = open(TEMPFILE, O_RDWR | O_CREAT, 0766);
 	if (fildes < 0)
@@ -138,5 +138,5 @@ static void sig_handler(int sig)
 static void cleanup(void)
 {
 	close(fildes);
-	tst_rmdir();
+//	tst_rmdir();
 }

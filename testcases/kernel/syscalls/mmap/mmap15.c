@@ -100,7 +100,7 @@ static void setup(void)
 {
 	tst_require_root();
 
-	tst_tmpdir();
+//	tst_tmpdir();
 
 	page_size = getpagesize();
 
@@ -109,5 +109,5 @@ static void setup(void)
 
 static void cleanup(void)
 {
-	tst_rmdir();
+//	tst_rmdir();
 }
