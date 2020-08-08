@@ -27,9 +27,9 @@
  */
 #include <stdio.h>
 #include <sys/mman.h>
-#include "safe_macros.h"
 #include "lapi/fcntl.h"
 #include "test.h"
+#include "safe_macros.h"
 
 #define TEMPFILE        "mmapfile"
 #define MMAPSIZE        (1UL<<20)
