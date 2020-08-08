@@ -47,8 +47,8 @@ static void cleanup(void);
 int main(int argc, char *argv[])
 {
 	int lc;
-	unsigned int sz_before;
-	unsigned int sz_after;
+	unsigned int sz_before = 1024;
+	unsigned int sz_after = 1024;
 	unsigned int sz_ch;
 
 	tst_parse_opts(argc, argv, NULL, NULL);
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
 		addr = mmap(NULL, MMAPSIZE, PROT_READ | PROT_WRITE,
 			    MAP_PRIVATE | MAP_LOCKED | MAP_ANONYMOUS,
-			    fd, 0);
+			    -1, 0);
 
 		if (addr == MAP_FAILED) {
 			tst_resm(TFAIL | TERRNO, "mmap of %s failed", TEMPFILE);
