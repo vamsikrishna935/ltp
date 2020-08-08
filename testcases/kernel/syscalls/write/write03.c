@@ -56,7 +56,7 @@ static void verify_write(void)
 static void setup(void)
 {
 	bad_addr = SAFE_MMAP(0, 1, PROT_NONE,
-			MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
+			MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
 	memset(wbuf, '0', 100);
 }
