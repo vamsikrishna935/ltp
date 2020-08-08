@@ -135,7 +135,7 @@ static void setup(void)
 }
 
 static struct tst_test test = {
-	.needs_tmpdir = 1,
+//	.needs_tmpdir = 1,
 	.setup = setup,
 	.test_all = test_writev,
 };
