@@ -26,11 +26,11 @@
  *  and this region should be locked into memory.
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/mman.h>
-#include "lapi/fcntl.h"
 #include "test.h"
 #include "safe_macros.h"
-
+#include "lapi/fcntl.h"
 #define TEMPFILE        "mmapfile"
 #define MMAPSIZE        (1UL<<20)
 #define LINELEN         256
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		tst_count = 0;
 		
 		static int fd;
-		fd = SAFE_OPEN(TEMPFILE, O_RDWR | O_PATH);
+		fd = SAFE_OPEN(TEMPFILE, O_RDWR | O_CREAT, 0644);
 
 		getvmlck(&sz_before);
 
