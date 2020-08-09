@@ -186,7 +186,7 @@ int main(int ac, char **av)
 						rval = 2;
 					}
 				}
-				exit(rval);
+//				exit(rval);
 			} else {
 				SAFE_WAIT(cleanup, &rval);
 				if (rval != 0 && WIFEXITED(rval)) {
@@ -222,7 +222,7 @@ int main(int ac, char **av)
 						rval = 2;
 					}
 				}
-				exit(rval);
+//				exit(rval);
 			} else {
 				SAFE_WAIT(cleanup, &rval);
 				if (rval != 0 && WIFEXITED(rval)) {
@@ -258,7 +258,7 @@ int main(int ac, char **av)
 						rval = 2;
 					}
 				}
-				exit(rval);
+//				exit(rval);
 			} else {
 				SAFE_WAIT(cleanup, &rval);
 				if (rval != 0 && WIFEXITED(rval)) {
