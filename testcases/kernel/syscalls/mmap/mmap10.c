@@ -175,7 +175,6 @@ void mmapzero(void)
 	if (munmap(x, SIZE + SIZE - ps) == -1)
 		tst_resm(TFAIL | TERRNO, "munmap all");
 	
-	tst_brkm(TBROK, cleanup, "fork");
 	tst_resm(TPASS, "Test passed successfully");
 }
 
