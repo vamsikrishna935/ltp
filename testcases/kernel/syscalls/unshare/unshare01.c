@@ -153,8 +153,8 @@ void setup(void)
 	tst_tmpdir();
 }
 
-void verify_unshare(char **arg){
-	switch (unshare(arg)) {
+void verify_unshare(int res, char *arg){
+	switch (res) {
 	case 0:
                 tst_resm(TPASS, "unshare with %s call "
                         "succeeded\n", arg);
@@ -184,9 +184,9 @@ int main(int ac, char **av)
 	for (lc = 0; TEST_LOOPING(lc); ++lc) {
 		tst_count = 0;
 		for (testno = 0; testno < TST_TOTAL; ++testno) {
-			verify_unshare(CLONE_FILES);
-			verify_unshare(CLONE_FS);
-			verify_unshare(CLONE_NEWNS); 
+			verify_unshare(unshare(CLONE_FILES), "CLONE_FILES");
+			verify_unshare(unshare(CLONE_FS), "CLONE_FS");
+			verify_unshare(unshare(CLONE_NEWNS), "CLONE_NEWNS"); 
 		}
 
 	}
