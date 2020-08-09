@@ -74,6 +74,11 @@
 /*	      Manas Kumar Nayak maknayak@in.ibm.com>				*/
 /********************************************************************************/
 
+/* Patch Description:
+	Tests were because no fork support.
+	Modified the tests without using fork and refactored the code.
+ */
+
 #define _GNU_SOURCE
 
 #include <stdio.h>
@@ -173,9 +178,7 @@ void verify_unshare(int res, char *arg){
 
 int main(int ac, char **av)
 {
-	pid_t pid1;
 	int lc;
-	int rval;
 
 	tst_parse_opts(ac, av, NULL, NULL);
 
@@ -188,7 +191,6 @@ int main(int ac, char **av)
 			verify_unshare(unshare(CLONE_FS), "CLONE_FS");
 			verify_unshare(unshare(CLONE_NEWNS), "CLONE_NEWNS"); 
 		}
-
 	}
 	cleanup();
 	tst_exit();

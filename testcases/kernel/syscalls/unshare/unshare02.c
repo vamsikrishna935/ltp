@@ -38,6 +38,12 @@
 /*	      Manas Kumar Nayak maknayak@in.ibm.com>			*/
 /******************************************************************************/
 
+/*
+ * Patch Description:
+	Test were failing because of no fork support.
+	Modified the tests without using fork and done code cleanup.
+ */
+
 #define _GNU_SOURCE
 
 #include <stdio.h>
