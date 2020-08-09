@@ -141,7 +141,7 @@ void mmapzero(void)
 #endif
 	x[SIZE] = 0;
 
-	switch (n = 0) {
+	switch (n = fork()) {
 	case -1:
 		tst_brkm(TBROK | TERRNO, cleanup, "fork");
 	case 0:
