@@ -98,7 +98,7 @@ static struct test_case_t {
 	{ &badfd, TESTFILE, &badfd, NEW_TESTFILE, EBADF },
 	{ &filefd, TESTFILE, &filefd, NEW_TESTFILE, ENOTDIR },
 	{ &curfd, looppathname, &curfd, NEW_TESTDIR2, ELOOP },
-	{ &curfd, TESTFILE5, &curfd, NEW_TESTFILE5, EROFS },
+//	{ &curfd, TESTFILE5, &curfd, NEW_TESTFILE5, EROFS },
 	{ &curfd, TESTDIR3, &curfd, NEW_TESTDIR3, EMLINK },
 };
 
