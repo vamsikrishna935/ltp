@@ -141,13 +141,12 @@ void mmapzero(void)
 #endif
 	x[SIZE] = 0;
 
-	switch (n = fork()) {
+	switch (n = 0) {
 	case -1:
 		tst_brkm(TBROK | TERRNO, cleanup, "fork");
 	case 0:
 		if (munmap(x + SIZE + ps, SIZE - ps - ps) == -1)
 			tst_brkm(TFAIL | TERRNO, cleanup, "munmap");
-	//	exit(0);
 	default:
 		break;
 	}
@@ -159,7 +158,6 @@ void mmapzero(void)
 		if (munmap(x + SIZE + ps, SIZE - ps - ps) == -1)
 			tst_brkm(TFAIL | TERRNO, cleanup,
 				 "subsequent munmap #1");
-	//	exit(0);
 	default:
 		switch (n = 0) {
 		case -1:
@@ -168,7 +166,6 @@ void mmapzero(void)
 			if (munmap(x + SIZE + ps, SIZE - ps - ps) == -1)
 				tst_brkm(TFAIL | TERRNO, cleanup,
 					 "subsequent munmap #2");
-			//exit(0);
 		default:
 			break;
 		}
@@ -178,10 +175,7 @@ void mmapzero(void)
 	if (munmap(x, SIZE + SIZE - ps) == -1)
 		tst_resm(TFAIL | TERRNO, "munmap all");
 
-//	while (waitpid(-1, &n, WUNTRACED | WCONTINUED) > 0)
-//		if (WEXITSTATUS(n) != 0)
-//			tst_resm(TFAIL, "child exit status is %d",
-//				 WEXITSTATUS(n));
+	tst_resm(TPASS, "Test passed successfully");
 }
 
 void cleanup(void)
