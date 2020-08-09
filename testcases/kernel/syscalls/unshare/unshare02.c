@@ -132,7 +132,7 @@ int main(int ac, char **av)
 		tst_count = 0;
 		for (testno = 0; testno < TST_TOTAL; ++testno) {
 
-			TEST(pid1 = fork());	//call to fork()
+			TEST(pid1 = 0);	//call to fork()
 			if (TEST_RETURN == -1) {
 				tst_brkm(TFAIL | TTERRNO, cleanup,
 					 "fork() failed.");
@@ -152,7 +152,7 @@ int main(int ac, char **av)
 						rval = 2;
 					}
 				}
-				exit(rval);
+			//	exit(rval);
 			} else {
 				SAFE_WAIT(cleanup, &rval);
 				if (rval != 0 && WIFEXITED(rval)) {
@@ -170,7 +170,7 @@ int main(int ac, char **av)
 				}
 			}
 
-			TEST(pid1 = fork());	//call to fork()
+			TEST(pid1 = 0);	//call to fork()
 			if (pid1 == -1) {
 				tst_brkm(TFAIL | TTERRNO, cleanup,
 					 "fork() failed.");
@@ -187,7 +187,7 @@ int main(int ac, char **av)
 						rval = 2;
 					}
 				}
-				exit(rval);
+			//	exit(rval);
 			} else {
 				SAFE_WAIT(cleanup, &rval);
 				if (rval != 0 && WIFEXITED(rval)) {
