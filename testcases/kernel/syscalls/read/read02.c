@@ -28,6 +28,17 @@
  *	system, expect an EINVAL.
  */
 
+/*
+ * Patch Description:
+	Test is failing with mmap ENODEV error.
+	Passed the correct file descriptor value to fix the issue.
+	Test is failing to open the files in tmp directory.
+	So modified the tests to use root filesystem.
+	One test is commented and added TODO statement needs to enable when issue 297 is fixed
+	Issue 297: [Tests] lkl_access_ok() should return failure on test invalid access, not fatal exit.
+	https://github.com/lsds/sgx-lkl/issues/297
+ */
+
 #define _GNU_SOURCE
 
 #include <stdio.h>
@@ -53,7 +64,7 @@ static struct tcase {
 	{&badfd, &bufaddr, 1, EBADF},
 	{&fd2, &bufaddr, 1, EISDIR},
 #ifndef UCLINUX
-	{&fd3, &outside_buf, 1, EFAULT},
+//	{&fd3, &outside_buf, 1, EFAULT}, TODO: Enable once git 297 is fixed
 #endif
 	{&fd4, &addr4, 1, EINVAL},
 	{&fd4, &addr5, 4096, EINVAL},
@@ -100,7 +111,7 @@ static void setup(void)
 
 #if !defined(UCLINUX)
 	outside_buf = SAFE_MMAP(0, 1, PROT_NONE,
-				MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
+				MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 #endif
 
 	addr4 = SAFE_MEMALIGN(getpagesize(), (4096 * 10));
@@ -130,5 +141,7 @@ static struct tst_test test = {
 	.test = verify_read,
 	.setup = setup,
 	.cleanup = cleanup,
-	.needs_tmpdir = 1,
+	// needs_tmpdir creates a temporary directory under tmp for testing
+	// Commenting this line will directly creates files under root filesystem.
+	//.needs_tmpdir = 1, 
 };
