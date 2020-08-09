@@ -167,7 +167,7 @@ int main(int ac, char **av)
 		tst_count = 0;
 		for (testno = 0; testno < TST_TOTAL; ++testno) {
 
-			pid1 = fork();	//call to fork()
+			pid1 = 0;	//call to fork()
 			if (pid1 == -1) {
 				tst_brkm(TFAIL | TERRNO, cleanup,
 					 "fork failed");
@@ -203,7 +203,7 @@ int main(int ac, char **av)
 				}
 			}
 
-			pid1 = fork();
+			pid1 = 0;
 			if (pid1 == -1) {
 				tst_brkm(TFAIL | TERRNO, cleanup,
 					 "fork failed");
@@ -239,7 +239,7 @@ int main(int ac, char **av)
 				}
 			}
 
-			pid1 = fork();
+			pid1 = 0;
 			if (pid1 == -1) {
 				tst_brkm(TFAIL | TERRNO, cleanup,
 					 "fork() failed.");
