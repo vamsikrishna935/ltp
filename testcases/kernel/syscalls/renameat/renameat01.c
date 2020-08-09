@@ -36,6 +36,15 @@
  *      maximum number of links.
  */
 
+/*
+ * Patch Description:
+	Tests were failing with Kernel panic(out of memory) in loop device.
+	In loop device we have memory limit of 32MB.
+	So modified the tests to use root file system.
+	Commented subtest EROFS which verifies read-only file system because
+	as root file system is mounted with write-only mode this cannot be tested
+ */
+
 #define _GNU_SOURCE
 
 #include <sys/types.h>
@@ -146,12 +155,6 @@ static void setup(void)
 
 	tst_tmpdir();
 
-//	fs_type = tst_dev_fs_type();
-//	device = tst_acquire_device(cleanup);
-
-//	if (!device)
-//		tst_brkm(TCONF, cleanup, "Failed to obtain block device");
-
 	TEST_PAUSE;
 
 	SAFE_TOUCH(cleanup, TESTFILE, FILEMODE, NULL);
@@ -182,13 +185,8 @@ static void setup(void)
 	for (i = 0; i < 43; i++)
 		strcat(looppathname, TESTDIR2);
 
-//	tst_mkfs(cleanup, device, fs_type, NULL, NULL);
 	SAFE_MKDIR(cleanup, MNTPOINT, DIRMODE);
-//	SAFE_MOUNT(cleanup, device, MNTPOINT, fs_type, 0, NULL);
-//	mount_flag = 1;
 	SAFE_TOUCH(cleanup, TESTFILE5, FILEMODE, NULL);
-//	SAFE_MOUNT(cleanup, device, MNTPOINT, fs_type, MS_REMOUNT | MS_RDONLY,
-//		   NULL);
 
 	SAFE_MKDIR(cleanup, TESTDIR3, DIRMODE);
 	max_subdirs = tst_fs_fill_subdirs(cleanup, "testemlinkdir");
@@ -242,12 +240,6 @@ static void cleanup(void)
 
 	if (filefd > 0 && close(filefd) < 0)
 		tst_resm(TWARN | TERRNO, "close filefd failed");
-
-//	if (mount_flag && tst_umount(MNTPOINT) < 0)
-//		tst_resm(TWARN | TERRNO, "umount %s failed", MNTPOINT);
-
-//	if (device)
-//		tst_release_device(device);
 
 	tst_rmdir();
 }
