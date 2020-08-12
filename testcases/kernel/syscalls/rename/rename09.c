@@ -145,7 +145,11 @@ int main(int ac, char **av)
 		}
 
 		pid1 = 0;
-		seteuid(0);
+		if (seteuid(0) == -1) {
+                                tst_resm(TWARN, "seteuid(0) failed");
+                //              exit(1);
+                        }
+
 
 		if (pid1 == 0) {	/* second child */
 			/* set to bin */
