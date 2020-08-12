@@ -30,8 +30,6 @@
 
 /*
  * Patch Description:
-	Test is failing with mmap ENODEV error.
-	Passed the correct file descriptor value to fix the issue.
 	Test is failing to open the files in tmp directory.
 	So modified the tests to use root filesystem.
  */
@@ -108,7 +106,7 @@ static void setup(void)
 
 #if !defined(UCLINUX)
 	outside_buf = SAFE_MMAP(0, 1, PROT_NONE,
-				MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+				MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 #endif
 
 	addr4 = SAFE_MEMALIGN(getpagesize(), (4096 * 10));
@@ -138,7 +136,11 @@ static struct tst_test test = {
 	.test = verify_read,
 	.setup = setup,
 	.cleanup = cleanup,
-	// needs_tmpdir creates a temporary directory under tmp for testing
+	// .needs_tmpdir creates a temporary directory under tmp for testing
 	// Commenting this line will directly creates files under root filesystem.
+	// Test is failing to open files in O_DIRECT mode in /tmp file system.
+	// O_DIRECT is to bypass the page cache while working with files. However, a tmpfs
+	// itself lives inside the page cache, so there’s nothing that can be bypassed. Therefore, 
+	// O_DIRECT on a tmpfs can’t really do anything. So modified the test to create files in the root filesystem.
 	//.needs_tmpdir = 1, 
 };
