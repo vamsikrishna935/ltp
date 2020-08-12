@@ -34,9 +34,6 @@
 	Passed the correct file descriptor value to fix the issue.
 	Test is failing to open the files in tmp directory.
 	So modified the tests to use root filesystem.
-	One test is commented and added TODO statement needs to enable when issue 297 is fixed
-	Issue 297: [Tests] lkl_access_ok() should return failure on test invalid access, not fatal exit.
-	https://github.com/lsds/sgx-lkl/issues/297
  */
 
 #define _GNU_SOURCE
@@ -64,7 +61,7 @@ static struct tcase {
 	{&badfd, &bufaddr, 1, EBADF},
 	{&fd2, &bufaddr, 1, EISDIR},
 #ifndef UCLINUX
-//	{&fd3, &outside_buf, 1, EFAULT}, TODO: Enable once git 297 is fixed
+	{&fd3, &outside_buf, 1, EFAULT},
 #endif
 	{&fd4, &addr4, 1, EINVAL},
 	{&fd4, &addr5, 4096, EINVAL},
