@@ -145,6 +145,7 @@ int main(int ac, char **av)
 		}
 
 		pid1 = 0;
+		tst_require_root();
 		if (seteuid(0) == -1) {
                                 tst_resm(TWARN, "seteuid(0) failed");
                 //              exit(1);
