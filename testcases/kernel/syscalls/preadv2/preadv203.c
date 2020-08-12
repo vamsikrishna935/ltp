@@ -49,7 +49,7 @@
 
 #define CHUNK_SZ 4123
 #define CHUNKS 60
-#define MNTPOINT "/tmp/mntpoint"
+#define MNTPOINT "mntpoint"
 #define FILES 500
 
 static int fds[FILES];
@@ -240,9 +240,6 @@ static void check_preadv2_nowait(int fd)
 
 static void setup(void)
 {
-	rmdir(MNTPOINT);
-	SAFE_MKDIR(MNTPOINT, 0777);
-	
 	char path[1024];
 	char buf[CHUNK_SZ];
 	unsigned int i;
@@ -268,14 +265,9 @@ static void do_cleanup(void)
 	unsigned int i;
 
 	for (i = 0; i < FILES; i++) {
-		char path[1024];
-		snprintf(path, sizeof(path), MNTPOINT"/file_%i", i);
 		if (fds[i] > 0)
 			SAFE_CLOSE(fds[i]);
-		remove(path);
 	}
-
-	SAFE_RMDIR(MNTPOINT);
 }
 
 TST_DECLARE_ONCE_FN(cleanup, do_cleanup);
@@ -284,5 +276,8 @@ static struct tst_test test = {
 	.setup = setup,
 	.cleanup = cleanup,
 	.test_all = verify_preadv2,
+	.mntpoint = MNTPOINT,
+	.mount_device = 1,
+	.all_filesystems = 1,
 	.needs_root = 1,
 };
