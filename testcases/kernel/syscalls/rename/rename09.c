@@ -141,7 +141,7 @@ int main(int ac, char **av)
 			/* create "old" file under it */
 			SAFE_TOUCH(cleanup, fname, 0700, NULL);
 
-			exit(0);
+//			exit(0);
 		}
 
 		pid1 = 0;
