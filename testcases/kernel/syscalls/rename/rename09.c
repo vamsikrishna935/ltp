@@ -145,6 +145,7 @@ int main(int ac, char **av)
 		}
 
 		pid1 = 0;
+		seteuid(0);
 
 		if (pid1 == 0) {	/* second child */
 			/* set to bin */
