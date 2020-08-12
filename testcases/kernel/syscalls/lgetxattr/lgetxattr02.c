@@ -26,7 +26,6 @@
 
  * Workaround to fix the issue:
     Modified the tests to use root filesystem.
-    Disabled a test, which needs to be enabled once git issue lsds/sgx-lkl#297 is fixed
  */
 
 #include "config.h"
@@ -52,7 +51,7 @@ static struct test_case {
 } tcase[] = {
 	{"testfile", sizeof(VALUE), ENODATA},
 	{"symlink", 1, ERANGE},
-//	{(char *)-1, sizeof(VALUE), EFAULT} TODO: Enable once git issue 297 is fixed
+	{(char *)-1, sizeof(VALUE), EFAULT}
 };
 
 static void verify_lgetxattr(unsigned int n)
