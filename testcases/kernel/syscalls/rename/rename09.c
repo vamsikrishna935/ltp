@@ -117,9 +117,7 @@ int main(int ac, char **av)
 
 		tst_count = 0;
 
-		if ((pid = FORK_OR_VFORK()) == -1) {
-			tst_brkm(TBROK, cleanup, "fork() #1 failed");
-		}
+		pid = 0;
 
 		if (pid == 0) {	/* first child */
 			/* set to nobody */
@@ -146,16 +144,7 @@ int main(int ac, char **av)
 			exit(0);
 		}
 
-		/* wait for child to exit */
-		wait(&status);
-		if (!WIFEXITED(status) || (WEXITSTATUS(status) != 0)) {
-			tst_brkm(TBROK, cleanup, "First child failed to set "
-				 "up conditions for the test");
-		}
-
-		if ((pid1 = FORK_OR_VFORK()) == -1) {
-			tst_brkm(TBROK, cleanup, "fork() #2 failed");
-		}
+		pid1 = 0;
 
 		if (pid1 == 0) {	/* second child */
 			/* set to bin */
@@ -191,7 +180,7 @@ int main(int ac, char **av)
 			/* set the process id back to root */
 			if (seteuid(0) == -1) {
 				tst_resm(TWARN, "seteuid(0) failed");
-				exit(1);
+		//		exit(1);
 			}
 
 			/* clean up things in case we are looping */
@@ -199,14 +188,6 @@ int main(int ac, char **av)
 			SAFE_UNLINK(cleanup, mname);
 			SAFE_RMDIR(cleanup, fdir);
 			SAFE_RMDIR(cleanup, mdir);
-		} else {
-			/* parent - let the second child carry on */
-			waitpid(pid1, &status, 0);
-			if (!WIFEXITED(status) || (WEXITSTATUS(status) != 0)) {
-				exit(WEXITSTATUS(status));
-			} else {
-				exit(0);
-			}
 		}
 	}
 
