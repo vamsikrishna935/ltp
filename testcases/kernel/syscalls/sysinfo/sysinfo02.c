@@ -69,7 +69,7 @@
 #include <stdint.h>
 
 #include "test.h"
-
+#include "tst_test.h"
 //#define INVALID_ADDRESS SAFE_MMAP(0, 1, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
 static void *INVALID_ADDRESS = (void *)-1;
 INVALID_ADDRESS = SAFE_MMAP(0, 1, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
