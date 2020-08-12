@@ -70,7 +70,7 @@
 
 #include "test.h"
 
-#define INVALID_ADDRESS ((uintptr_t)-1)
+#define INVALID_ADDRESS SAFE_MMAP(0, 1, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
 
 void setup();
 void cleanup();
