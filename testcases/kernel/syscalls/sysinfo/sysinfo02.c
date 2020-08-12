@@ -59,10 +59,8 @@
  *  None
  *
  */
-#define _GNU_SOURCE
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -71,10 +69,9 @@
 #include <stdint.h>
 
 #include "test.h"
-#include "tst_test.h"
-#define INVALID_ADDRESS (void *)-1;
-//static void *INVALID_ADDRESS = (void *)-1;
-//INVALID_ADDRESS = SAFE_MMAP(0, 1, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
+#define INVALID_ADDRESS ((uintptr_t)-1)
+
 void setup();
 void cleanup();
 
