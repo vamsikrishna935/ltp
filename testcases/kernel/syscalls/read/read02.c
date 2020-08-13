@@ -30,8 +30,10 @@
 
 /*
  * Patch Description:
-	Test is failing to open the files in tmp directory.
-	So modified the tests to use root filesystem.
+	Test is failing to open files in O_DIRECT mode in /tmp file system.
+	O_DIRECT is to bypass the page cache while working with files. However, a tmpfs
+	itself lives inside the page cache, so there’s nothing that can be bypassed. Therefore, 
+	O_DIRECT on a tmpfs can’t really do anything. So modified the test to create files in the root filesystem.
  */
 
 #define _GNU_SOURCE
